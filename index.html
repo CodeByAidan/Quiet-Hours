@@ -9,8 +9,19 @@
     <link rel="stylesheet" href="styles/scss/moon.css" />
     <link rel="stylesheet" href="styles/scss/footer.css" />
     <link rel="stylesheet" href="styles/scss/textanimation.css" />
-    <!-- favicon: -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <meta name="title" content="Quiet Hours" />
+    <meta name="description" content="Quiet Hours is a website that displays the time until quiet hours are over at Roger Williams University." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://quiet-hours.aidanb.net/" />
+    <meta property="og:title" content="Quiet Hours" />
+    <meta property="og:description" content="Quiet Hours is a website that displays the time until quiet hours are over at Roger Williams University." />
+    <meta property="og:image" content="https://quiet-hours.aidanb.net/images/og-image.png" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://quiet-hours.aidanb.net/" />
+    <meta property="twitter:title" content="Quiet Hours" />
+    <meta property="twitter:description" content="Quiet Hours is a website that displays the time until quiet hours are over at Roger Williams University." />
+    <meta property="twitter:image" content="https://quiet-hours.aidanb.net/images/og-image.png" />
 </head>
 
 <body>
@@ -21,9 +32,21 @@
         <div id="countdown"></div>
         <div id="current-time"></div>
     </div>
+    <script src="
+        https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js
+    "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@2410ad1a8f5844df00191600eafda59def537830/examples/js/controls/OrbitControls.js"></script>
+    <script>var exports = {};</script>
+    <script type="importmap">
+        {
+            "imports": {
+              "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+            }
+        }
+    </script>
+
     <script type="module" src="scripts/moon.js"></script>
     <script type="module" src="scripts/script.js"></script>
 
