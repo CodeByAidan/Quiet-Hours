@@ -1,58 +1,68 @@
+import { DateTime } from '../node_modules/luxon/src/luxon.js';
+
+/* Quiet Hours begin at 11pm Sunday-Thursday and 1am Friday and Saturday. */
 function updateCountdown() {
-    const now = new Date();
+    const now = DateTime.local({ zone: 'America/New_York' });
+    // const now = DateTime.local({ zone: 'America/Los_Angeles' });
     let targetHour, quietDay;
 
-    if (now.getDay() === 0 || (now.getDay() >= 1 && now.getDay() <= 4)) {
-        targetHour = 23; // Sunday to Thursday: Quiet Hours start at 11pm
-        quietDay = "Sunday to Thursday";
-    } else {
-        targetHour = 1; // Friday and Saturday: Quiet Hours start at 1am
-        quietDay = "Friday and Saturday";
+    // 1 is Monday and 7 is Sunday
+    if (now.weekday == 0) { // Day: Sunday
+        targetHour = 23;
+        quietDay = 'Sunday';
+    } else if (now.weekday === 1) { // Day: Monday
+        targetHour = 23;
+        quietDay = 'Monday';
+    } else if (now.weekday === 2) { // Day: Tuesday
+        targetHour = 23;
+        quietDay = 'Tuesday';
+    } else if (now.weekday === 3) { // Day: Wednesday
+        targetHour = 23;
+        quietDay = 'Wednesday';
+    } else if (now.weekday === 4) { // Day: Thursday
+        targetHour = 23;
+        quietDay = 'Thursday';
+    } else if (now.weekday === 5) { // Day: Friday
+        targetHour = 25;
+        quietDay = 'Saturday';
+    } else if (now.weekday === 6 && now.hour < 1) { // Day: Saturday and before 1am
+        targetHour = 1;
+        quietDay = 'Saturday';
+    } else if (now.weekday === 6 && now.hour >= 1) { // Day: Saturday and after 1am
+        targetHour = 25;
+        quietDay = 'Sunday';
+    } else if (now.weekday === 7 && now.hour < 1) { // Day: Sunday and before 1am
+        targetHour = 1;
+        quietDay = 'Sunday';
+    } else if (now.weekday === 7 && now.hour >= 1) { // Day: Sunday and after 1am
+        targetHour = 23;
+        quietDay = 'Sunday';
+    } else { // Error
+        console.log('Error: Invalid weekday');
     }
 
-    const targetDate = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        targetHour,
-        0,
-        0,
-        0
-    );
-    if (now.getHours() >= targetHour) {
-        targetDate.setDate(targetDate.getDate() + 1);
+    let targetDate = now.set({ hour: targetHour, minute: 0, second: 0, millisecond: 0 });
+
+    if (now > targetDate) {
+        // It's past the target time, so add one day
+        targetDate = targetDate.plus({ days: 1 });
     }
 
-    const timeDifference = targetDate - now;
-    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-    const milliseconds = timeDifference % 1000;
+    const timeDifference = targetDate.diff(now, ['hours', 'minutes', 'seconds', 'milliseconds']);
+    const { hours, minutes, seconds, milliseconds } = timeDifference.toObject();
 
-    const nextQuietHourTime = targetDate.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-    });
-    const nextQuietHourDay = targetDate.toLocaleDateString("en-US", {
-        weekday: "long",
-    });
+    document.getElementById("countdown").innerHTML = `${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
 
-    const currentTime = now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    });
-    const currentDay = now.toLocaleDateString("en-US", { weekday: "long" });
+    const nextQuietHourTime = targetDate.toLocaleString(DateTime.TIME_SIMPLE);
+    const nextQuietHourDay = targetDate.toLocaleString({ weekday: 'long' });
 
-    document.getElementById(
-        "countdown"
-    ).innerHTML = `${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+    const currentTime = now.toLocaleString(DateTime.TIME_SIMPLE);
+    const currentDay = now.toLocaleString({ weekday: 'long' });
 
     document.getElementById("current-time").innerHTML = `
     Current time: ${currentTime}<br>
     Today is ${currentDay}<br>
-    Quiet Hours start at ${nextQuietHourTime} on ${nextQuietHourDay}`;
+    Quiet Hours start at ${nextQuietHourTime} on ${quietDay}`;
 }
 
 setInterval(updateCountdown, 1);

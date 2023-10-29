@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "luxon": "^3.4.3",
     "three": "^0.158.0"
   }
 }
