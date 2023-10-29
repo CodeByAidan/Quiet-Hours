@@ -128,3 +128,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+styles/scss/moon.css.map
+styles/scss/moon.scss
+styles/scss/sparkles.css.map
+styles/scss/sparkles.scss
