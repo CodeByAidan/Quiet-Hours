@@ -1,0 +1,23 @@
+.text {
+  font-weight: bold;
+}
+
+.animated-text {
+  background: linear-gradient(to right, #003366, #68c3d4, #f0f0f0, #ffd500, #ffd500, #f0f0f0, #68c3d4, #003366);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-animation 5s ease-in-out infinite;
+  background-size: 800% 100%;
+}
+
+@keyframes gradient-animation {
+  0%, 100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+/*# sourceMappingURL=textanimation.css.map */
