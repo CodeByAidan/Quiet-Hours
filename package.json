@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "luxon": "^3.4.3",
-    "three": "^0.159.0",
+    "three": "^0.162.0",
     "@types/luxon": "^3.3.3"
   },
   "devDependencies": {
-    "@types/three": "^0.159.0",
+    "@types/three": "^0.162.0",
     "typescript": "^5.2.2"
   }
 }
