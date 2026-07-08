@@ -6,6 +6,6 @@
   },
   "devDependencies": {
     "@types/three": "^0.159.0",
-    "typescript": "^5.2.2"
+    "typescript": "^7.0.0"
   }
 }
